@@ -29,16 +29,31 @@ function printMessage($firstName, $lastName, $orderNumber, $email, $message) {
 </head>
 <body>
 <form method="post">
-    <input required type="text" name="first-name" placeholder="First name"><br>
-    <input required type="text" name="last-name" placeholder="Last name"><br>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="first-name" id="floatingInput" placeholder="Duncan">
+        <label for="floatingInput">First name</label>
+    </div><br>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" name="last-name" id="floatingInput" placeholder="Jansen">
+        <label for="floatingInput">Last name</label>
+    </div><br>
     <input type="number" name="order-number" placeholder="Order number"><br>
-    <input type="email" name="email" placeholder="E-mail"><br>
-    <input type="text" name="message" placeholder="Add message..."><br>
-    <button name="submit">Submit</button>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+    </div><br>
+    <div class="mb-3">
+        <label for="textArea" class="form-label">Add message...</label>
+        <textarea class="form-control" id="textArea" name="message" rows="3"></textarea>
+    </div><br>
+    <button class="btn btn-primary" name="submit" type="submit">Submit form</button>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
 <?php
-printMessage($firstName, $lastName, $orderNumber, $email, $message);
+if (isset($_POST['submit'])) {
+    printMessage($firstName, $lastName, $orderNumber, $email, $message);
+}
+
 ?>
