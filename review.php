@@ -30,19 +30,19 @@ function printMessage()
     <form method="post" class="wrapper" action="submit.php">
         <div class="form-floating">
             <input type="text" class="form-control" name="first-name" id="floatingInput" placeholder="Duncan">
-            <label for="floatingInput">First name</label>
+            <label for="first-name">First name</label>
         </div>
         <div class="form-floating">
             <input type="text" class="form-control" name="last-name" id="floatingInput" placeholder="Jansen">
-            <label for="floatingInput">Last name</label>
+            <label for="last-name">Last name</label>
         </div>
         <div class="form-floating">
             <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            <label for="email">Email address</label>
         </div>
         <div class="form-floating">
             <input type="text" class="form-control" name="message" id="floatingInput" placeholder="Great service!">
-            <label for="floatingInput">Add message...</label>
+            <label for="message">Add message...</label>
         </div>
         <button class="btn btn-secondary" name="submit" type="submit">Submit form</button>
     </form>
