@@ -11,6 +11,25 @@ try {
     $pdo = new PDO($dsn, $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Check if the 'userreview' table exists
+    $tableCheck = $pdo->query("SHOW TABLES LIKE 'userreview'");
+    if ($tableCheck->rowCount() == 0) {
+        // Create the table if it doesn't exist
+        $createTableQuery = "
+            CREATE TABLE userreview (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                firstname VARCHAR(255) NOT NULL,
+                lastname VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                content TEXT NOT NULL,
+                date_rev TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ";
+        $pdo->exec($createTableQuery);
+        echo "Table 'userreview' created successfully.";
+    } else {
+        echo "Table 'userreview' already exists.";
+    }
 } catch (PDOException $e) {
     die("Database connection or query failed: " . $e->getMessage());
 }
