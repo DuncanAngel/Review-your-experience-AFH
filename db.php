@@ -5,11 +5,23 @@ $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
 try {
-    $pdo = new PDO($dsn, $user, $pass);
+    // Create connection to MySQL server without selecting the database
+    $pdo = new PDO("mysql:host=$host", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Check if the database exists
+    $query = $pdo->query("SHOW DATABASES LIKE '$db'");
+    if ($query->rowCount() == 0) {
+        // If the database doesn't exist, create it
+        $pdo->exec("CREATE DATABASE $db");
+        echo "Database '$db' created successfully.<br>";
+    }
+
+    // Now connect to the specific database
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $pdo = new PDO($dsn, $user, $pass);
+    echo "Connected to the '$db' database.<br>";
 
     // Check if the 'userreview' table exists
     $tableCheck = $pdo->query("SHOW TABLES LIKE 'userreview'");
@@ -33,3 +45,4 @@ try {
 } catch (PDOException $e) {
     die("Database connection or query failed: " . $e->getMessage());
 }
+?>
