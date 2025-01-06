@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db   = 'angelsfromhell';
+$db = 'angelsfromhell';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
@@ -12,7 +12,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $tableCheck = $pdo->query("SHOW TABLES LIKE 'userreviews'");
-    
+
     if ($tableCheck->rowCount() == 0) {
         $createTableQuery = "
             CREATE TABLE userreviews (
@@ -24,9 +24,9 @@ try {
                 date_rev TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ";
-        $pdo->exec($createTableQuery);  
+        $pdo->exec($createTableQuery);
     } else {
-        header("Location: index.php")
+        header("Location: index.php");
     }
 
 } catch (PDOException $e) {
