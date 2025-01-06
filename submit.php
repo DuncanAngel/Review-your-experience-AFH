@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $message = $_POST['message'];
 
     try {
-        $sql = "INSERT INTO userreview (firstname, lastname, email, content) VALUES (:firstname, :lastname, :email, :content)";
+        $sql = "INSERT INTO userreviews (firstname, lastname, email, content) VALUES (:firstname, :lastname, :email, :content)";
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);

@@ -8,15 +8,12 @@ $charset = 'utf8mb4';
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 try {
-    // Establish PDO connection
     $pdo = new PDO($dsn, $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Check if the 'userreview' table exists
     $tableCheck = $pdo->query("SHOW TABLES LIKE 'userreviews'");
     
     if ($tableCheck->rowCount() == 0) {
-        // Table doesn't exist, create it
         $createTableQuery = "
             CREATE TABLE userreviews (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,10 +24,9 @@ try {
                 date_rev TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ";
-        $pdo->exec($createTableQuery);  // Execute the table creation query
-        echo "Table 'userreview' created successfully.<br>";
+        $pdo->exec($createTableQuery);  
     } else {
-        echo "Table 'userreview' already exists.<br>";
+        header("Location: index.php")
     }
 
 } catch (PDOException $e) {
