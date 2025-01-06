@@ -25,8 +25,6 @@ try {
             )
         ";
         $pdo->exec($createTableQuery);
-    } else {
-        header("Location: index.php");
     }
 
 } catch (PDOException $e) {
