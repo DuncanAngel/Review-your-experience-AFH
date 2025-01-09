@@ -13,13 +13,14 @@
                         Categories
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Latest drop!</a></li>
+                        <li><a class="dropdown-item" href="latestdrop.php">Latest drop!</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">T-Shirts</a></li>
-                        <li><a class="dropdown-item" href="#">Jeans</a></li>
-                        <li><a class="dropdown-item" href="#">Hoodies & Sweaters</a></li>
+                        <li><a class="dropdown-item" href="tshirts.php">T-Shirts</a></li>
+                        <li><a class="dropdown-item" href="jeans.php">Jeans</a></li>
+                        <li><a class="dropdown-item" href="hoodiesnsweaters.php">Hoodies & Sweaters</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="review.php">Review your experience</a></li>
+                        <li><a class="dropdown-item" href="faq.php">FAQ</a></li>
                     </ul>
                 </li>
             </ul>
@@ -27,17 +28,4 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
         </div>
-        <div class="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
-            <div class="bg-dark p-4">
-                <h5 class="text-body-emphasis h4">Collapsed content</h5>
-                <span class="text-body-secondary">Toggleable via the navbar brand.</span>
-            </div>
-        </div>
-    </div>
-    <div class="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
-        <div class="bg-dark p-4">
-            <h5 class="text-body-emphasis h4">Collapsed content</h5>
-            <span class="text-body-secondary">Toggleable via the navbar brand.</span>
-        </div>
-    </div>
 </nav>
