@@ -5,7 +5,7 @@ $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<nav class="navbar navbar-expand-lg bg-dark">
+<nav class="navbar navbar-expand bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php">
             <img src="img/openart-image_nnevPETh_1732727425807_raw.jpg" alt="logo" width="30" height="30">
