@@ -1,14 +1,13 @@
 <?php
-global $pdo;
 $query = $pdo->prepare("SELECT * FROM category");
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<nav class="navbar navbar-expand bg-dark">
+<nav class="navbar navbar-expand bg-black">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php">
-            <img src="img/openart-image_nnevPETh_1732727425807_raw.jpg" alt="logo" width="30" height="30">
+            <img src="img/angels_from_hell-textlogo-white.png" alt="logo" width="150" height="75">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

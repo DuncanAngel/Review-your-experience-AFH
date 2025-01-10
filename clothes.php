@@ -32,7 +32,7 @@ $clothes = $query->fetchAll(PDO::FETCH_ASSOC);
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
 
-    <body class="bg-dark-subtle">
+    <body class="bg-black">
         <?php include("Resources/header.php"); ?>
         <div class="container my-4">
             <div class="row">
@@ -47,7 +47,7 @@ $clothes = $query->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No clothing items found.</p>
+                    <p class="text-white">No clothing items found.</p>
                 <?php endif; ?>
             </div>
         </div>

@@ -1,9 +1,8 @@
 <?php
-global $pdo;
- $tableCheck = $pdo->query("SHOW TABLES LIKE 'userreviews'");
-
- if ($tableCheck->rowCount() == 0) {
-     $createTableQuery = "
+require_once 'db.php';
+$tableCheck = $pdo->query("SHOW TABLES LIKE 'userreviews'");
+if ($tableCheck->rowCount() == 0) {
+    $createTableQuery = "
          CREATE TABLE userreviews (
              id INT AUTO_INCREMENT PRIMARY KEY,
              firstname VARCHAR(255) NOT NULL,
@@ -13,9 +12,8 @@ global $pdo;
              date_rev TIMESTAMP DEFAULT CURRENT_TIMESTAMP
          )
      ";
-     $pdo->exec($createTableQuery);
- }
-
+    $pdo->exec($createTableQuery);
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = $_POST["first-name"];
     $lastName = $_POST["last-name"];
@@ -23,10 +21,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $_POST["message"];
 }
 
-function printMessage()
-{
-    echo "Success! Your message has been sent. We will get back to you as soon as possible.<br>";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    $firstname = $_POST['inputfirstname'];
+    $lastname = $_POST['inputlastname'];
+    $email = $_POST['inputemail'];
+    $message = $_POST['inputmessage'];
+    $category = $_POST['inputcategory'];
+
+    try {
+        $sql = "INSERT INTO userreviews (firstname, lastname, email, content, category) VALUES (:firstname, :lastname, :email, :content, :category)";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
+        $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':content', $message, PDO::PARAM_STR);
+        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+
+        $stmt->execute();
+        echo "<p class='text-white'>Your review has been sent!</p>";
+        header("Location: review.php");
+        exit;
+    } catch (PDOException $e) {
+        header("Location: review.php");
+    }
 }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -42,41 +62,41 @@ function printMessage()
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body class="bg-dark-subtle">
+<body class="bg-black">
     <?php include 'resources/header.php'; ?>
     <div class="container d-flex justify-content-center">
-    <form method="POST" class="row g-1 w-50" action="submit.php">
-    <div class="col-md-6 mt-5">
-        <label for="inputfirstname" class="form-label">First name</label>
-        <input type="text" class="form-control" name="inputfirstname" placeholder="John">
-    </div>
-    <div class="col-md-6 mt-5">
-        <label for="inputlastname" class="form-label">Last name</label>
-        <input type="text" class="form-control" name="inputlastname" placeholder="Johanson">
-    </div>
-    <div class="col-12">
-        <label for="inputemail" class="form-label">E-mail</label>
-        <input type="email" class="form-control" name="inputemail" placeholder="name@example.com">
-    </div>
-    <div class="col-12">
-        <label for="inputmessage" class="form-label">Message</label>
-        <textarea type="text" class="form-control" name="inputmessage" placeholder="e.g. 'Great service!'" style="height: 100px;"></textarea>
-    </div>
-    <div class="col-md-2">
-        <label for="inputcategory" class="form-label">Category</label>
-        <select id="inputcategory" class="form-select" name="inputcategory">
-            <option selected disabled>Choose...</option>
-            <option>T-shirt</option>
-            <option>Jeans</option>
-            <option>Hoodie</option>
-            <option>Sweater</option>
-            <option>Other</option>
-        </select>
-    </div>
-    <div class="col-12">
-        <button type="submit btn" name="submit" class="btn btn-secondary">Send review</button>
-    </div>
-</form>
+        <form method="POST" class="row g-1 w-50">
+            <div class="col-md-6 mt-5">
+                <label for="inputfirstname" class="form-label text-white">First name</label>
+                <input type="text" class="form-control" name="inputfirstname" placeholder="John">
+            </div>
+            <div class="col-md-6 mt-5">
+                <label for="inputlastname" class="form-label text-white">Last name</label>
+                <input type="text" class="form-control" name="inputlastname" placeholder="Johanson">
+            </div>
+            <div class="col-12">
+                <label for="inputemail" class="form-label text-white">E-mail</label>
+                <input type="email" class="form-control" name="inputemail" placeholder="name@example.com">
+            </div>
+            <div class="col-12">
+                <label for="inputmessage" class="form-label text-white">Message</label>
+                <textarea type="text" class="form-control" name="inputmessage" placeholder="e.g. 'Great service!'"
+                    style="height: 100px;"></textarea>
+            </div>
+            <div class="col-md-2">
+                <label for="inputcategory" class="form-label text-white">Category</label>
+                <select id="inputcategory" class="form-select" name="inputcategory">
+                    <option selected disabled>Choose...</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option class="dropdown-item"><?= $category["name"] ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+            <div>
+                <button type="submit btn" name="submit" class="btn btn-secondary text-white">Send review</button>
+            </div>
+        </form>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

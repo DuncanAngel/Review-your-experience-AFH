@@ -1,3 +1,8 @@
+<?php
+require_once 'db.php';
+global $pdo;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
