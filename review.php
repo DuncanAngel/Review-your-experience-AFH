@@ -1,4 +1,21 @@
 <?php
+global $pdo;
+ $tableCheck = $pdo->query("SHOW TABLES LIKE 'userreviews'");
+
+ if ($tableCheck->rowCount() == 0) {
+     $createTableQuery = "
+         CREATE TABLE userreviews (
+             id INT AUTO_INCREMENT PRIMARY KEY,
+             firstname VARCHAR(255) NOT NULL,
+             lastname VARCHAR(255) NOT NULL,
+             email VARCHAR(255) NOT NULL,
+             content TEXT NOT NULL,
+             date_rev TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+         )
+     ";
+     $pdo->exec($createTableQuery);
+ }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = $_POST["first-name"];
     $lastName = $_POST["last-name"];

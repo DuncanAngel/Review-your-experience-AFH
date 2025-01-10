@@ -4,13 +4,8 @@
     box-sizing: border-box;
 }
 
-.card {
-    cursor: pointer;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
+.card-mine {
+    border: none !important;
     width: fit-content !important;
 }
 
