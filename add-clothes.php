@@ -48,7 +48,7 @@ $conn->close();
 <body>
     <div class="container my-5">
         <h2>Add New Clothing Item</h2>
-        <form action="add_clothing.php" method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Clothing Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
