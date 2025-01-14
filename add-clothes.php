@@ -15,13 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $conn->real_escape_string($_POST['name']);
     $price = $conn->real_escape_string($_POST['price']);
     $categoryId = $conn->real_escape_string($_POST['categoryId']);
+    $description = $conn->real_escape_string($_POST['description']);
+    $material = $conn->real_escape_string($_POST['material']);
 
     // Handle file upload
     $image = $_FILES['image'];
     $imagePath = 'uploads/' . basename($image['name']);
     if (move_uploaded_file($image['tmp_name'], $imagePath)) {
         // Insert data into database
-        $sql = "INSERT INTO clothing (name, price, image, categoryId) VALUES ('$name', '$price', '$imagePath', '$categoryId')";
+        $sql = "INSERT INTO clothing (name, price, image, categoryId, description, material) VALUES ('$name', '$price', '$imagePath', '$categoryId', '$description', '$material')";
         if ($conn->query($sql) === TRUE) {
             echo "New clothing item added successfully!";
         } else {
@@ -56,6 +58,14 @@ $conn->close();
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
                 <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name="description" required>
+            </div>
+            <div class="mb-3">
+                <label for="material" class="form-label">Material</label>
+                <input type="text" class="form-control" id="material" name="material" required>
             </div>
             <div class="mb-3">
                 <label for="category" class="form-label">Category</label>

@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require 'modules/functions.php';
 global $pdo;
 
 $id = filter_input(INPUT_GET, 'cat-id', FILTER_VALIDATE_INT);
@@ -12,7 +13,7 @@ if ($id) {
    JOIN category ON clothing.categoryId = category.id
    WHERE clothing.categoryID = :id
  ");
- $query->bindParam("id", $id);
+    $query->bindParam("id", $id);
 } else {
     die("Error: Id is not correct!");
 }
@@ -31,20 +32,19 @@ $clothes = $query->fetchAll(PDO::FETCH_ASSOC);
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
-
     <body class="bg-black">
         <?php include("Resources/header.php"); ?>
         <div class="container my-4">
             <div class="row">
                 <?php if (count($clothes) > 0): ?>
                     <?php foreach ($clothes as $clothing): ?>
-                            <div class="card card-mine container-mine">
-                                <div style="width: 18rem;">
-                                    <a href="#"><img src="<?= $clothing['image'] ?>" class="card-img-top"
-                                            alt="<?= $clothing['name'] ?>"></a>
-                                </div>
-                                <p class="card-text "><?= $clothing['name'] ?></p>
+                        <div class="card card-mine container-mine">
+                            <div style="width: 18rem;">
+                                <a href="product-page.php?id=<?= $clothing['id'] ?>"><img src="<?= $clothing['image'] ?>"
+                                        class="card-img-top" alt="<?= $clothing['name'] ?>"></a>
                             </div>
+                            <p class="card-text "><?= $clothing['name'] ?></p>
+                        </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p class="text-white">No clothing items found.</p>
