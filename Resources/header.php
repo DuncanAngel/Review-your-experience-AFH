@@ -30,6 +30,7 @@ $categories = $query->fetchAll(PDO::FETCH_ASSOC);
                         </li>
                         <li><a class="dropdown-item" href="review.php">Review your experience</a></li>
                         <li><a class="dropdown-item" href="faq.php">FAQ</a></li>
+                        <li><a class="dropdown-item" href="account-login.php">Accounts</a></li>
                     </ul>
                 </li>
             </ul>
