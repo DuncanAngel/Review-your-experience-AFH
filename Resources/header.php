@@ -3,6 +3,7 @@ $query = $pdo->prepare("SELECT * FROM category");
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=person" />
 
 <nav class="navbar navbar-expand bg-black">
     <div class="container-fluid">
@@ -30,12 +31,14 @@ $categories = $query->fetchAll(PDO::FETCH_ASSOC);
                         </li>
                         <li><a class="dropdown-item" href="review.php">Review your experience</a></li>
                         <li><a class="dropdown-item" href="faq.php">FAQ</a></li>
-                        <li><a class="dropdown-item" href="account-login.php">Accounts</a></li>
                     </ul>
                 </li>
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
+            <a class="btn text-light" href="account-login.php"><span class="material-symbols-outlined">
+                    person
+                </span></a>
         </div>
 </nav>
