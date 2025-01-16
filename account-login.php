@@ -1,5 +1,12 @@
 <?php
 require_once 'db.php';
+global $pdo;
+session_start();
+
+if (isset($_SESSION['logged_in']) || $_SESSION['logged_in'] === true) {
+    header('Location: account.php'); 
+    exit;
+}
 
 $tableCheck = $pdo->query("SHOW TABLES LIKE 'accounts'");
 if ($tableCheck->rowCount() == 0) {
@@ -14,6 +21,37 @@ if ($tableCheck->rowCount() == 0) {
     ";
     $pdo->exec($createTableQuery);
 }
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login-submit'])) {
+    $email = $_POST['login-email'];
+    $password = $_POST['login-password'];
+
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM accounts WHERE email = :email');
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['username'] = $user['username'];     
+                $_SESSION['logged_in'] = true;
+                header('Location: account.php');
+                exit;
+            } else {
+                echo "Invalid password.";
+            }
+        } else {
+            echo "User not found.";
+        }
+    } catch (PDOException $e) {
+        die("An error occurred: " . $e->getMessage());
+    }
+}
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup-submit'])) {
     $username = $_POST['signup-username'];
@@ -39,11 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup-submit'])) {
     } catch (PDOException $e) {
         $error = "Something went wrong. Please try again later.";
     }
-}
-
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login-submit'])) {
-    $email = $_POST['login-email'];
-    $password = $_POST['login-password'];
 }
 ?>
 
@@ -79,32 +112,32 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login-submit'])) {
             </ul>
 
             <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                <form method="POST" action="">
+                <form method="POST">
                     <div class="mb-3">
                         <label for="login-email" class="form-label text-light">Email</label>
-                        <input type="password" class="form-control" id="login-email" placeholder="Enter your email" required>
+                        <input type="email" class="form-control" name="login-email" placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
                         <label for="login-password" class="form-label text-light">Password</label>
-                        <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                        <input type="password" class="form-control" name="login-password" placeholder="Enter your password" required>
                     </div>
                     <button type="submit" name="login-submit" class="btn btn-secondary w-100">Login</button>
                 </form>
             </div>
 
             <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
-                <form method="POST" action="">
+                <form method="POST">
                     <div class="mb-3">
                         <label for="signup-username" class="form-label text-light">Username</label>
-                        <input type="text" class="form-control" id="signup-username" name="signup-username" placeholder="Enter your username" required>
+                        <input type="text" class="form-control" name="signup-username" name="signup-username" placeholder="Enter your username" required>
                     </div>
                     <div class="mb-3">
                         <label for="signup-email" class="form-label text-light">Email</label>
-                        <input type="email" class="form-control" id="signup-email" name="signup-email" placeholder="Enter your email" required>
+                        <input type="email" class="form-control" name="signup-email" name="signup-email" placeholder="Enter your email" required>
                     </div>
                     <div class="mb-3">
                         <label for="signup-password" class="form-label text-light">Password</label>
-                        <input type="password" class="form-control" id="signup-password" name="signup-password" placeholder="Enter your password" required>
+                        <input type="password" class="form-control" name="signup-password" name="signup-password" placeholder="Enter your password" required>
                     </div>
                     <button type="submit" name="signup-submit" class="btn btn-secondary w-100">Create Account</button>
                 </form>
