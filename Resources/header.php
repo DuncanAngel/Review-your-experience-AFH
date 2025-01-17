@@ -3,7 +3,8 @@ $query = $pdo->prepare("SELECT * FROM category");
 $query->execute();
 $categories = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=person" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=person,shopping_cart" />
+
 
 <nav class="navbar navbar-expand bg-black">
     <div class="container-fluid">
@@ -40,5 +41,13 @@ $categories = $query->fetchAll(PDO::FETCH_ASSOC);
             <a class="btn text-light" href="account-login.php"><span class="material-symbols-outlined">
                     person
                 </span></a>
+            <a href="cart.php" class="btn text-light">
+                <span class="material-symbols-outlined">
+                    shopping_cart
+                </span>
+            </a>
+            <div class="cart-nmbr"></div>
         </div>
 </nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
