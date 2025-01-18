@@ -8,14 +8,18 @@ $id = filter_input(INPUT_GET, 'cat-id', FILTER_VALIDATE_INT);
 // Query to fetch clothing data with category name
 if ($id) {
     $query = $pdo->prepare("
-    SELECT clothing.id, clothing.name, clothing.image, clothing.price, clothing.categoryId, category.name AS categoryName
-   FROM clothing
-   JOIN category ON clothing.categoryId = category.id
-   WHERE clothing.categoryID = :id
- ");
+        SELECT clothing.id, clothing.name, clothing.image, clothing.price, clothing.categoryId, category.name AS categoryName
+        FROM clothing
+        JOIN category ON clothing.categoryId = category.id
+        WHERE clothing.categoryID = :id
+    ");
     $query->bindParam("id", $id);
 } else {
-    die("Error: Id is not correct!");
+    $query = $pdo->prepare("
+        SELECT clothing.id, clothing.name, clothing.image, clothing.price, clothing.categoryId, category.name AS categoryName
+        FROM clothing
+        JOIN category ON clothing.categoryId = category.id
+    ");
 }
 
 $query->execute();
