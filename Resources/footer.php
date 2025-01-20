@@ -88,8 +88,8 @@
             </div>
 
             <!-- Copyright -->
-            <div class="text-center copyright">
-                Copyright © 2025 Tamed Psychotic
+            <div class="text-center copyright">9
+                Copyright © 2025 Angels from hell
             </div>
         </div>
     </footer>
