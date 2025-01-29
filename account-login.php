@@ -3,10 +3,12 @@ require_once 'db.php';
 global $pdo;
 session_start();
 
-if (isset($_SESSION['logged_in']) || $_SESSION['logged_in'] === true) {
-    header('Location: account.php'); 
+
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    header('Location: account.php');
     exit;
 }
+
 
 $tableCheck = $pdo->query("SHOW TABLES LIKE 'accounts'");
 if ($tableCheck->rowCount() == 0) {
@@ -22,7 +24,7 @@ if ($tableCheck->rowCount() == 0) {
     $pdo->exec($createTableQuery);
 }
 
-
+// Login 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login-submit'])) {
     $email = $_POST['login-email'];
     $password = $_POST['login-password'];
@@ -41,18 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login-submit'])) {
                 header('Location: account.php');
                 exit;
             } else {
-                echo "Invalid password.";
+                $_SESSION['error_message'] = "Invalid password.";
+                header('Location: account-login.php');
+                exit;
             }
         } else {
-            echo "User not found.";
+            $_SESSION['error_message'] = "User not found.";
+            header('Location: account-login.php');
+            exit;
         }
     } catch (PDOException $e) {
-        die("An error occurred: " . $e->getMessage());
+        $_SESSION['error_message'] = "An error occurred, please try again later.";
+        header('Location: account-login.php');
+        exit;
     }
 }
 
-
-
+// Sign-up 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup-submit'])) {
     $username = $_POST['signup-username'];
     $email = $_POST['signup-email'];
@@ -75,10 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup-submit'])) {
         header("Location: account-login.php");
         exit;
     } catch (PDOException $e) {
-        $error = "Something went wrong. Please try again later.";
+        header('Location: account-login.php');
+        exit;
     }
 }
 ?>
+
 
 
 <!doctype html>
