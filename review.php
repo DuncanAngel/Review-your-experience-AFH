@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 </head>
 
 <body class="bg-black">
-    <?php include 'resources/header.php'; ?>
+    <?php include "resources/header.php"; ?>
     <div class="container d-flex justify-content-center">
         <form method="POST" class="row g-1 w-50">
             <div class="col-md-6 mt-5">
