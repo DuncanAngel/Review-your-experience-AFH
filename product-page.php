@@ -41,7 +41,7 @@ $clothing = getPiece($clothingId);
     <?php include "resources/header.php"; ?>
     <?php
     if (is_array($clothing) && isset($clothing['image'], $clothing['name'], $clothing['price'], $clothing['description'], $clothing['material'])) {
-    ?>
+        ?>
         <div class="container my-4">
             <div class="row">
                 <div class="col-md-6">
@@ -51,8 +51,10 @@ $clothing = getPiece($clothingId);
                 <div class="col-md-6">
                     <h2 class="card-title text-white"><?= htmlspecialchars($clothing['name']) ?></h2>
                     <p class="card-text text-white"><strong>Price:</strong> €<?= htmlspecialchars($clothing['price']) ?></p>
-                    <p class="card-text text-white"><strong>Description:</strong> <?= htmlspecialchars($clothing['description']) ?></p>
-                    <p class="card-text text-white"><strong>Material:</strong> <?= htmlspecialchars($clothing['material']) ?></p>
+                    <p class="card-text text-white"><strong>Description:</strong>
+                        <?= htmlspecialchars($clothing['description']) ?></p>
+                    <p class="card-text text-white"><strong>Material:</strong>
+                        <?= htmlspecialchars($clothing['material']) ?></p>
                     <!-- Add to Cart Button -->
                     <form action="cart.php" method="post">
                         <input type="hidden" name="product_id" value="<?= htmlspecialchars($clothing['id']) ?>">
@@ -63,11 +65,12 @@ $clothing = getPiece($clothingId);
                 </div>
             </div>
         </div>
-    <?php
+        <?php
     } else {
         echo '<p>Error: Product information is not available.</p>';
     }
     ?>
+    <?php include "resources/footer.php"; ?>
     <script>
         const cart = document.querySelector('.cart-nmbr');
         let cartAmount = 0;

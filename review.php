@@ -14,29 +14,22 @@ if ($tableCheck->rowCount() == 0) {
      ";
     $pdo->exec($createTableQuery);
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = $_POST["first-name"];
-    $lastName = $_POST["last-name"];
-    $email = $_POST["email"];
-    $message = $_POST["message"];
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $firstname = $_POST['inputfirstname'];
     $lastname = $_POST['inputlastname'];
     $email = $_POST['inputemail'];
     $message = $_POST['inputmessage'];
-    $category = $_POST['inputcategory'];
+    $clothingId = $_POST['inputClothingId'];
 
     try {
-        $sql = "INSERT INTO userreviews (firstname, lastname, email, content, category) VALUES (:firstname, :lastname, :email, :content, :category)";
+        $sql = "INSERT INTO userreviews (firstname, lastname, email, content, clothingId) VALUES (:firstname, :lastname, :email, :content, :clothingId)";
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
         $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':content', $message, PDO::PARAM_STR);
-        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+        $stmt->bindParam(':clothingId', $clothingId, PDO::PARAM_STR);
 
         $stmt->execute();
         echo "<p class='text-white'>Your review has been sent!</p>";
@@ -87,8 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <label for="inputcategory" class="form-label text-white">Category</label>
                 <select id="inputcategory" class="form-select" name="inputcategory">
                     <option selected disabled>Choose...</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option class="dropdown-item"><?= $category["name"] ?></option>
+                    <?php foreach ($clothes as $clothingId): ?>
+                        <option class="dropdown-item"><?= $clothes["name"] ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
@@ -96,11 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <button type="submit btn" name="submit" class="btn btn-secondary text-white">Send review</button>
             </div>
         </form>
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 </body>
-
+<?php include "resources/footer.php"; ?>
 </html>
